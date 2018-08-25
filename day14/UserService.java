@@ -34,18 +34,31 @@ public class UserService implements IUserService{
 
 	@Override
 	public User login(String username, String password) {
-		User u=new User();
-		u.setUsername(username);
-		u.setPassword(password);
-		return u;
+		for(int i=0;i<total;i++){
+			if(user[i].getUsername().equals(username)&&user[i].getPassword().equals(password)){
+				return user[i];
+			}
+			
+		}
+		return null;
 	}
 
 	@Override
 	public boolean regist(User user) {
+		for(int i=0;i<total;i++){
+			if(this.user[i].getUsername().equals(user.getUsername())){
+				System.out.println("输入的用户名有误");
+				return false;
+			}
+		}
+		if(total>=all.length){
+			//报错或者扩容
+			//扩容,all指向新的数组
+			all = Arrays.copyOf(all, all.length*2);
+		}
+		this.user[total++]=user;
 		
-		this.user[total]=user;
-		total++;
-		return false;
+		return true;
 	}
 	
 
